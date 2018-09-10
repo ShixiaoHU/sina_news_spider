@@ -6,9 +6,6 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 
 
-# news = 'https://feed.sina.com.cn/api/roll/get?pageid=121&lid=1356&num=20&versionNumber=1.2.4&page=2&encode=utf-8&callback=feedCardJsonpCallback&_=1536491185587'
-
-
 def getcommentcounts(news_url):
     newsid = re.search('doc-i(.*).shtml',news_url).group(1)
     commenturl = 'http://comment5.news.sina.com.cn/page/info?version=1&format=json&channel=gn&newsid=comos-{}&group=undefined&compress=0&ie=utf-8&oe=utf-8&page=1&page_size=3&t_size=3&h_size=3&thread=1'
@@ -43,10 +40,9 @@ def geturllinks(url):
         newsdetails.append(getnewsdetail(ent['url']))
     return newsdetails
 
-
-for i in range(1, 3):
-    newslist_url  = 'https://feed.sina.com.cn/api/roll/get?pageid=121&lid=1356&num=20&versionNumber=1.2.4&page={}&encode=utf-8'
-    new_url = newslist_url.format(i)
-    all_news = geturllinks(new_url)
-    for news in all_news:
-        print(news['title'])
+def getnews():
+    for i in range(1, 3):
+        newslist_url  = 'https://feed.sina.com.cn/api/roll/get?pageid=121&lid=1356&num=20&versionNumber=1.2.4&page={}&encode=utf-8'
+        new_url = newslist_url.format(i)
+        all_news = geturllinks(new_url)
+    return all_news
