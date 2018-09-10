@@ -4,7 +4,7 @@ import requests
 import json
 from bs4 import BeautifulSoup
 from datetime import datetime
-
+import pandas
 
 def getcommentcounts(news_url):
     newsid = re.search('doc-i(.*).shtml',news_url).group(1)
@@ -40,9 +40,11 @@ def geturllinks(url):
         newsdetails.append(getnewsdetail(ent['url']))
     return newsdetails
 
-def getnews():
-    for i in range(1, 3):
-        newslist_url  = 'https://feed.sina.com.cn/api/roll/get?pageid=121&lid=1356&num=20&versionNumber=1.2.4&page={}&encode=utf-8'
-        new_url = newslist_url.format(i)
-        all_news = geturllinks(new_url)
-    return all_news
+news_total = []
+for i in range(1, 3):
+    newslist_url  = 'https://feed.sina.com.cn/api/roll/get?pageid=121&lid=1356&num=20&versionNumber=1.2.4&page={}&encode=utf-8'
+    new_url = newslist_url.format(i)
+    news_total.extend(geturllinks(new_url))
+
+df = pandas.DataFrame(news_total)
+print(df)
